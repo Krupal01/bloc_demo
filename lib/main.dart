@@ -1,5 +1,7 @@
 import 'package:bloc_demo/blocs/internet_bloc/internet_bloc.dart';
 import 'package:bloc_demo/blocs/internet_bloc/internet_state.dart';
+import 'package:bloc_demo/blocs/internet_cubit/internet_cubit.dart';
+import 'package:bloc_demo/blocs/internet_cubit/internet_cubit_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,13 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => InternetBloc(),
+      create: (context) => InternetCubit(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(),
+        home: const MyHome1Page(),
       ),
     );
   }
@@ -53,6 +55,44 @@ class MyHomePage extends StatelessWidget {
               return const Text("Connected");
             }
             else if(state is InternetLostState){
+              return const Text("lost connection");
+            }else{
+              return const Text("Loading...");
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+class MyHome1Page extends StatelessWidget {
+  const MyHome1Page({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Cubit Demo")),
+      body: Center(
+        child: BlocConsumer<InternetCubit, InternetCubitState>(
+          listener:(context1, state) => {
+            if(state  == InternetCubitState.gained){
+              ScaffoldMessenger.of(context1).showSnackBar(
+                const SnackBar(content: Text("internet connected"),backgroundColor: Colors.green,)
+              )
+            }
+            else if(state == InternetCubitState.lost){
+              ScaffoldMessenger.of(context1).showSnackBar(
+                const SnackBar(content: Text("internet lost"),backgroundColor: Colors.red,)
+              )
+            }
+          },
+          builder: (context1, state) {
+            if (state == InternetCubitState.gained) {
+              return const Text("Connected");
+            }
+            else if(state == InternetCubitState.lost){
               return const Text("lost connection");
             }else{
               return const Text("Loading...");
