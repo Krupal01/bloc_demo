@@ -9,9 +9,22 @@ class Routes {
   static MaterialPageRoute? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case FirstScreen.route:
-        return MaterialPageRoute(builder: (context) =>BlocProvider(create: (context) => FirstCubit(),child: const FirstScreen(),),);
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => FirstCubit(),
+            child: const FirstScreen(),
+          ),
+        );
       case SecondScreen.route:
-        return MaterialPageRoute(builder: (context) =>BlocProvider(create: (context) => SecondCubit(),child: const SecondScreen(),),);
+        Map<String, dynamic> argu =
+            routeSettings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SecondCubit(),
+            child: SecondScreen(title:argu["title"],),
+          ),
+        );
       default:
         return null;
     }

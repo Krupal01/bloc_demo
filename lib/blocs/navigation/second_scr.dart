@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SecondScreen extends StatelessWidget {
+  final String title;
   static const route = "/second_screen";
-  const SecondScreen({Key? key}) : super(key: key);
+  const SecondScreen({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("second screen"),
+        title: Text(title),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -21,9 +22,11 @@ class SecondScreen extends StatelessWidget {
               return Text(state.toString());
             },
           ),
-          ElevatedButton(onPressed: (){
-            BlocProvider.of<SecondCubit>(context).increment();
-          }, child: const Text("increse"))
+          ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<SecondCubit>(context).increment();
+              },
+              child: const Text("increse"))
         ],
       ),
     );
