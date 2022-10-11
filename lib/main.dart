@@ -3,6 +3,9 @@ import 'package:bloc_demo/blocs/internet_bloc/internet_state.dart';
 import 'package:bloc_demo/blocs/internet_cubit/internet_cubit.dart';
 import 'package:bloc_demo/blocs/internet_cubit/internet_cubit_state.dart';
 import 'package:bloc_demo/blocs/login_bloc/login_bloc.dart';
+import 'package:bloc_demo/blocs/navigation/first_cubit.dart';
+import 'package:bloc_demo/blocs/navigation/first_scr.dart';
+import 'package:bloc_demo/blocs/navigation/route.dart';
 import 'package:bloc_demo/login_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,13 +20,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBlock(),
+      create: (context) => FirstCubit(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen(),
+        onGenerateRoute: (settings) => Routes.onGenerateRoute(settings),
+        initialRoute: FirstScreen.route,
+        
       ),
     );
   }
